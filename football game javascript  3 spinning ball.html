@@ -1,0 +1,756 @@
+<!doctype html>
+<html>
+    <head>
+    <title>
+        simple football
+    </title>
+    <style>
+#football{
+    height:30px;
+    width:30px;
+    background:linear-gradient(purple,yellow);
+    border-radius:50%;
+
+}
+body{
+    background-image:url(https://media.istockphoto.com/id/472347896/photo/striped-soccer-field.jpg?s=612x612&w=0&k=20&c=wgeavCCOimF1b5mrv9QNQuuJqs1ERX67pDjPT3yv8j8=)
+}
+#left{
+    position:absolute;
+    right:60px;
+    top:250px;
+}
+#right{
+    position:absolute;
+    right:20px;
+    top:250px;
+
+}
+#up{
+    position:absolute;
+   top:220px;
+   right:40px; 
+}
+#down{
+    position:absolute;
+    top:280px;
+    right:40px;
+}
+
+#bar1{
+   
+    height:10px;
+    width:150px;
+    background-color:black;
+}
+#bar2{
+    
+    height:150px;
+    width:10px;
+    background-color:black;
+}
+#bar3{
+   background-color:black;
+    height: 10px;
+    width: 150px;  
+}
+#lu{
+position:absolute;
+top:220px;
+right:75px;
+}
+#ru{
+    position:absolute;
+top:220px;
+right:10px; 
+}
+#ld{
+    position:absolute;
+    top:280px;
+    right:75px;
+}
+#rd{
+    position:absolute;
+    top:280px;
+    right:10px;
+}
+#goalpost{
+    position:absolute;
+    bottom:130px;
+    right:800px;
+}
+#def1{
+    position:absolute;
+    height:30px;
+    width:30px;
+    background-color:red;
+    right:200px;
+    bottom:200px;
+    border-radius:50%;
+}
+#def2{
+    position:absolute;
+    height:30px;
+    width:30px;
+    background-color:red;
+    right:280px;
+    bottom:220px;
+    border-radius:50%;
+}
+#def3{
+    position:absolute;
+    height:30px;
+    width:30px;
+    background-color:red;
+    right:350px;
+    bottom:150px;
+    border-radius:50%;
+}
+#def4{
+    position:absolute;
+    height:30px;
+    width:30px;
+    background-color:red;
+    right:460px;
+    bottom:350px;
+    border-radius:50%;
+}
+
+#pitch{
+height:100px;
+width:100px;
+background-color:white;
+border-radius:50%;
+position:absolute;
+right:440px;
+bottom:160px;
+z-index:-1;
+}
+#goaltext{
+    display:none;
+    width:auto;
+    height:100px;
+    position:absolute;
+    background-color:black;
+    color:white;
+    left:50px;
+    top:50px;
+    border-radius:50%;
+    animation-name:goalanim;
+    animation-duration:4s;
+    animation-iteration-count:infinite;
+
+
+}
+#play{
+    display:none;
+    position:absolute;
+    left:50px;
+    bottom:25px;
+    height:50px;
+    width:auto;
+   
+    
+
+}
+@keyframes goalanim{
+0%{
+    top:50px;
+    left:50px;
+    color:white;
+}
+50%{
+    top:150px;
+    left:280px;
+    color:green;
+    transform:scale(2);
+}
+100%{
+    top:50px;
+    left:50px;
+    color:white; 
+}
+}
+#headf1{
+    height:10px;
+    width:10px;
+    border-radius:50%;
+    background-color:black;
+
+}
+
+
+
+    </style>
+</head>
+    <body>
+        <div id="football">
+        </div>
+        <div id="goalpost">
+       <div id="bar1"></div>
+       <div id="bar2"></div>
+       <div id="bar3"></div>
+        </div>
+        <div id="pitch"></div>
+        <div id="def1"></div>
+            
+            <div id="def2"></div>
+            <div id="def3"></div>
+            <div id="def4"></div>
+        <button id="left">L</button>
+        <button id="right">R</button>
+        <button id="up">U</button>
+        <button id="down">D</button>
+        <button id="lu">LU</button>
+        <button id="ru">RU</button>
+        <button id="ld">LD</button>
+        <button id="rd">RD</button>
+       <button id="shoot">shooting</button>
+       <div id="goaltext">
+        <h1>GOAL</h1>
+        </div>
+        <button ID="play">RESUME</button>
+    </body>
+    <script>
+        let left=document.getElementById("left")
+        let right=document.getElementById("right")
+        let up=document.getElementById("up")
+        let down=document.getElementById("down")
+        let football = document.getElementById("football");
+        def1.style.right="200px";
+        def1.style.bottom="200px"
+        def2.style.right="280px";
+        def2.style.bottom="220px";
+        def3.style.right="350px";
+        def3.style.bottom="150px"
+        def4.style.right="460px";
+        def4.style.bottom="350px"
+     console.log(football.style.height)
+      football.style.position="absolute";
+      football.style.right="100px";
+      football.style.bottom="80px";
+      goalpost.style.right="800px";
+      goalpost.style.top="100px";
+      goalpost.style.height="160px";
+      let goalt=document.getElementById("goaltext")
+      let play=document.getElementById("play")
+      let ballang=0;
+      play.addEventListener("click",function(){
+        //below line to hide the goal alert text on screen which is added when goal scored
+        goalt.style.display="none";
+      })
+
+
+      //in below few lines trying to get the position of goalpost for using shooting buttton to 
+     //show goal situation
+
+     /*for(let i=0;i<150;i++){
+     if(parseInt(football.style.right)==parseInt(goalpost.style.right)+i){
+        for(let j=0;j<parseInt(goalpost.style.height);j++){
+           if(parseInt(football.style.bottom)==parseInt(goalpost.style.bottom)+j){
+            alert("goal")
+        }
+        }
+     }
+     }
+     */
+
+
+    //below is function for ball ration while ball moves to simulate ball spinniong while 
+    //moving to clockwise or right side 
+    function ballrotationclock(){
+        //understand the issue with backtick and string literal${} using varibales 
+        //inside strings in javascript
+        football.style.transform=`rotate(${ballang+50}deg)`;
+    ballang=ballang+50;
+    console.log(ballang);
+    }
+    
+    //below is function for ball ration while ball moves to simulate ball spinniong while 
+    //moving to left side or anticlockwise
+    function ballrotationanticlock(){
+        //understand the issue with backtick and string literal${} using varibales 
+        //inside strings in javascript
+        
+        //ball rotation anticlockwise for ball moving left
+        football.style.transform=`rotate(${ballang-50}deg)`;
+    ballang=ballang-50;
+    console.log(ballang);
+    }
+
+    //below is function for modulas for covrerting any value to its positive value
+    //used in multiple places where i use it to check whether ball is closer to defenders 
+    //whether right or left to ball
+    
+
+     function positivediff(x){
+        if(x<0){
+             return -1*x;
+        }
+        else{
+           return x;
+        }
+     }
+    /* here is function for simulating def2 behaviour to be used in multiple directional buttons in code 
+    */
+   function def2behv()
+   {
+    let def2diffright=parseInt(football.style.right)-parseInt(def2.style.right)
+    let def2diffbottom=parseInt(football.style.bottom)-parseInt(def2.style.bottom)
+    if(positivediff(def2diffright)<80){
+        if(def2diffright>0){
+        return def2.style.right=parseInt(def2.style.right)+1+"px";
+    }
+ if(def2diffright<0){
+    return def2.style.right=parseInt(def2.style.right)-1+"px";
+    }
+ }
+ if(positivediff(def2diffbottom)<80){
+        if(def2diffbottom>0){
+       return def2.style.bottom=parseInt(def2.style.bottom)+1+"px";
+    }
+ if(def2diffbottom<0){
+    return def2.style.bottom=parseInt(def2.style.bottom)-1+"px";
+    }
+ }
+   }
+   //below is refactored code for defender collision with ball or defender taking the ball
+   function defcollisionball(y){
+    for(let i=0;i<30;i++){
+    if(football.style.right==parseInt(y.style.right)-i+"px"){
+        for(let j=0;j<30;j++){
+            if(football.style.bottom==parseInt(y.style.bottom)-j+"px"){
+        football.style.right="100px";
+        football.style.bottom="80px";
+        alert("defender took the ball");
+        }
+        }
+    }
+}
+    
+   }
+   //code function for simulating def1 behaviour used in multiple buttons in code
+function def1behv(){
+   
+    let footballstate=parseInt(football.style.right)
+    let defonestate=parseInt(def1.style.right)
+    let diffdefoneright=parseInt(football.style.right)-parseInt(def1.style.right)
+    //while(parseInt(football.style.right)==footballstate){
+    
+     if(positivediff(diffdefoneright)<100 ){
+            console.log(diffdefoneright)
+        if(diffdefoneright>1){
+        def1.style.right=parseInt(def1.style.right)+1+"px"
+        }
+
+        if(diffdefoneright<0){
+            def1.style.right=parseInt(def1.style.right)-1+"px" 
+        }
+        console.log(diffdefoneright)
+    
+}
+let diffdefonebottom=parseInt(football.style.bottom)-parseInt(def1.style.bottom);
+if(positivediff(diffdefonebottom)>60){
+    if(diffdefonebottom<0){
+        def1.style.bottom=parseInt(def1.style.bottom)-1+"px";
+    }
+    if(diffdefonebottom>0){
+        def1.style.bottom=parseInt(def1.style.bottom)+1+"px";
+    }
+}
+
+
+}
+
+ /* here is function for simulating def3 behaviour to be used in multiple directional buttons in code 
+    */
+    function def3behv()
+   {
+    let def3diffright=parseInt(football.style.right)-parseInt(def3.style.right)
+    let def3diffbottom=parseInt(football.style.bottom)-parseInt(def3.style.bottom)
+    if(positivediff(def3diffright)<80){
+        if(def3diffright>0){
+        return def3.style.right=parseInt(def3.style.right)+1+"px";
+    }
+ if(def3diffright<0){
+    return def3.style.right=parseInt(def3.style.right)-1+"px";
+    }
+ }
+ if(positivediff(def3diffbottom)<80){
+        if(def3diffbottom>0){
+       return def3.style.bottom=parseInt(def3.style.bottom)+1+"px";
+    }
+ if(def3diffbottom<0){
+    return def3.style.bottom=parseInt(def3.style.bottom)-1+"px";
+    }
+ }
+   }
+
+   /* here is function for simulating def4 behaviour to be used in multiple directional buttons in code 
+    */
+    function def4behv()
+   {
+    let def4diffright=parseInt(football.style.right)-parseInt(def4.style.right)
+    let def4diffbottom=parseInt(football.style.bottom)-parseInt(def4.style.bottom)
+    if(positivediff(def4diffright)<80){
+        if(def4diffright>0){
+        return def4.style.right=parseInt(def4.style.right)+1+"px";
+    }
+ if(def4diffright<0){
+    return def4.style.right=parseInt(def4.style.right)-1+"px";
+    }
+ }
+ if(positivediff(def4diffbottom)<80){
+        if(def4diffbottom>0){
+       return def4.style.bottom=parseInt(def4.style.bottom)+1+"px";
+    }
+ if(def4diffbottom<0){
+    return def4.style.bottom=parseInt(def4.style.bottom)-1+"px";
+    }
+ }
+   }
+
+
+    function getfootballright(){
+        return parseInt(football.style.right);
+    }
+    function getfootballbottom(){
+       return parseInt(football.style.bottom);
+    }
+
+
+
+
+
+        //alternative code for implementing goal situation detection and acting here
+        function checkgoal(){
+        if(getfootballright()>650 && getfootballright()<800)
+        {
+        if(getfootballbottom()>130 && getfootballbottom()<290)  
+        {
+            //goalt is for capturing goaltext div that is hidden by default
+            goalt.style.display="block";
+            goalt.style.visibility="visible";
+            play.style.display="block"
+            play.style.visibility="visible"
+          alert("goal scored")
+          
+  
+        }
+    }
+}
+
+
+
+
+
+
+
+       //i was trying to use variable for footballstyle.right but it did not work 
+       //for some reason ,when i used this variable in moveleft event function id not work
+      //let rightinitial=football.style.right;
+     // console.log(rightinitial)
+
+     //enent listeners start here
+
+      
+    function moveleft(){
+        //rightinitial=parseInt(rightinitial)+2+"px";
+    football.style.right=parseInt(football.style.right)+2+"px"
+
+   //used below if ball rotaion or football spinning function to spin ball simulation
+   //while moving it 
+    ballrotationanticlock()
+
+
+    checkgoal()
+
+    /* comment on 4 sept after making inititla program 1 month ago ,trying to simulate defender bahaviour here i am going to simulate defender moving 
+    towards football wherever ball is by using this,whenver direction button is pressed
+     i use event listner on them the positions of defeneder and ball is calculated by using
+     def style right and football.style.right and then i calculate distance between ball and
+     defender by subtracting right and bottom value of ball and defender and then i have to
+     move defender by this 2 values here right and bottom difference ,but i want ball to 
+     not move directly from one point to another i want to make it feel like human running 
+     to simulate speed of defender moving to ball ,i want to use for now loops such that 
+     defender move by a certain small distance along that right and bottom in loops such 
+     that particular loop has to end when the ball changes position,so for that i need to 
+     find a way to compare the prev and old position value like style.right and bottom
+     of ball ,i am currenly trying to see that i save the position of balll ij a constant 
+     variable and then try to compare this constant variable with new position whether this 
+     works or not,or not getting the differnce rather just finding whether difference if 
+     positive or neagtive between defender and ball and depending on that moving defender
+     in loop to left or right side and down or up
+    */
+
+   //function def1 behav used here for def1 beghaviour to track ball
+   def1behv()
+
+//function for simulating defender2 beahaviour defined previously in code
+  def2behv();
+
+    def3behv()
+
+    def4behv()
+    
+
+    
+    // below code is to check whether ball overlapps with obstacles coordinated and if so then to 
+    //impose a pentaly to player and place ball back to default or similar place back
+    console.log(def1.style.right)
+    //i added loop in below code as my defender are not point objects they have thickness and height 
+    //so i have to have some range which takes into account the range of defenders booy in space
+    //but currently is thi9s loop as it is same i for  a loop then the some dimension like 
+    // def1.style.right+i and def1.style.bottom+i will use same if but there can be a 
+    //dimention where is the range of def1 i will be  diff for right and bottom which has to 
+    //be represented
+
+        //code for collision with def1 with football
+        defcollisionball(def1)
+        defcollisionball(def2)
+        defcollisionball(def2)
+        defcollisionball(def4)
+
+       
+   
+}
+
+//i have to addd some animation for shooting button so 
+//i have to access football and find a way to add animation to 
+//football when shooting button is pressed
+
+   
+
+    function moveright(){
+    football.style.right=parseInt(football.style.right)-2+"px";
+
+    //used below if ball rotaion or football spinning function to spin ball simulation
+   //while moving it 
+   ballrotationclock()
+
+    checkgoal()
+     
+
+     //below code for simulating def1 bahaviour to get to chase ball while player moves it
+
+
+     def1behv()
+
+   
+//function for simulating defender2 beahaviour defined previously in code
+def2behv()
+
+def3behv()
+def4behv()
+    
+
+    //similar code for collsion with defenders implemented here
+    defcollisionball(def1)
+    defcollisionball(def2)
+    defcollisionball(def3)
+    defcollisionball(def4)
+   
+    }
+   
+    function moveup(){
+    football.style.bottom=parseInt(football.style.bottom,10)+2+"px"
+
+    //used below if ball rotaion or football spinning function to spin ball simulation
+   //while moving it 
+   ballrotationclock()
+
+     //below code for simulating def1 bahaviour to get to chase ball while player moves it
+
+
+ def1behv()
+
+
+def2behv()
+
+def3behv()
+
+def4behv()
+    
+defcollisionball(def1)
+        defcollisionball(def2)
+        defcollisionball(def2)
+        defcollisionball(def4)
+
+   
+    }
+
+    function movedown(){
+    football.style.bottom=parseInt(football.style.bottom,10)-2+"px"
+
+    //used below if ball rotaion or football spinning function to spin ball simulation
+   //while moving it 
+   ballrotationanticlock()
+
+ //below code for simulating def1 bahaviour to get to chase ball while player moves it
+
+
+ def1behv()
+
+
+//function for simulating defender2 beahaviour defined previously in code
+def2behv()
+
+def3behv()
+
+def4behv()
+    
+
+defcollisionball(def1)
+        defcollisionball(def2)
+        defcollisionball(def2)
+        defcollisionball(def4)
+
+       
+    }
+    function leftup(){
+        football.style.right=parseInt(football.style.right)+2+"px";
+        football.style.bottom=parseInt(football.style.bottom)+2+"px";
+
+        //used below if ball rotaion or football spinning function to spin ball simulation
+   //while moving it 
+    ballrotationanticlock()
+
+         //below code for simulating def1 bahaviour to get to chase ball while player moves it
+
+
+    def1behv()
+
+
+//function for simulating defender2 beahaviour defined previously in code
+def2behv()
+
+def3behv()
+def4behv()
+    
+
+defcollisionball(def1)
+        defcollisionball(def2)
+        defcollisionball(def2)
+        defcollisionball(def4)
+
+       
+    }
+    function rightup(){
+        football.style.right=parseInt(football.style.right)-2+"px";
+        football.style.bottom=parseInt(football.style.bottom)+2+"px";
+
+        //used below if ball rotaion or football spinning function to spin ball simulation
+   //while moving it 
+    ballrotationclock()
+
+ //below code for simulating def1 bahaviour to get to chase ball while player moves it
+
+
+ def1behv()
+
+
+//function for simulating defender2 beahaviour defined previously in code
+def2behv()
+
+def3behv()
+
+def4behv()
+    
+
+defcollisionball(def1)
+        defcollisionball(def2)
+        defcollisionball(def2)
+        defcollisionball(def4)
+
+       
+    }
+    function leftdown(){
+        football.style.right=parseInt(football.style.right)+2+"px";
+        football.style.bottom=parseInt(football.style.bottom)-2+"px";
+
+        //used below if ball rotaion or football spinning function to spin ball simulation
+   //while moving it 
+    ballrotationanticlock()
+
+         //below code for simulating def1 bahaviour to get to chase ball while player moves it
+
+
+    def1behv()
+
+
+//function for simulating defender2 beahaviour defined previously in code
+def2behv()
+
+def3behv()
+
+def4behv()
+    
+defcollisionball(def1)
+        defcollisionball(def2)
+        defcollisionball(def2)
+        defcollisionball(def4)
+
+
+        
+    }
+    function rightdown(){
+        football.style.right=parseInt(football.style.right)-2+"px";
+        football.style.bottom=parseInt(football.style.bottom)-2+"px";
+
+        //used below if ball rotaion or football spinning function to spin ball simulation
+   //while moving it 
+    ballrotationclock()
+
+         //below code for simulating def1 bahaviour to get to chase ball while player moves it
+
+
+    def1behv()
+
+
+//function for simulating defender2 beahaviour defined previously in code
+def2behv()
+
+def3behv()
+
+def4behv()
+    
+defcollisionball(def1)
+        defcollisionball(def2)
+        defcollisionball(def2)
+        defcollisionball(def4)
+
+    
+    }
+        left.addEventListener("click",moveleft)
+        right.addEventListener("click",moveright)
+        up.addEventListener("click",moveup)
+       down.addEventListener("click",movedown)
+     lu.addEventListener("click",leftup) 
+     ru.addEventListener("click",rightup)
+     ld.addEventListener("click",leftdown)
+     rd.addEventListener("click",rightdown)
+
+     let shooting=document.getElementById("shoot")
+     //when i used these values outside the function the the code was taking the initial
+     //football.style.right values defined in beginning it was not taking the updated 
+     //valued from inside the functions so i then used it from function shooting
+     //let animateright=parseInt(football.style.right)+200+"px";
+     //let keyframes=[{right:football.style.right},{right:animateright}]
+     //console.log(right)
+     //console.log(football.style.right)
+     function shootingg(){
+        let animateright=parseInt(football.style.right)+700+"px";
+        let animatebottom=parseInt(football.style.bottom)+200+"px";
+        let animaterightf=parseInt(animateright)+100+"px";
+        let animatebottomf=parseInt(animatebottom)-150+"px;"
+         let keyframes=[{right:football.style.right,bottom:football.style.bottom},{right:animateright,bottom:animatebottom},{right:animaterightf,bottom:animatebottomf}
+        ]
+     football.animate(keyframes,2000)
+     }
+    
+     
+     shooting.addEventListener("click",shootingg)
+
+     
+    </script>
+    </html>
